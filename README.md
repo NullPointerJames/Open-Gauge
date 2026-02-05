@@ -2,13 +2,18 @@
 
 **An Open Source 52mm CAN Bus Gauge**
 
-Open-Gauge is an open-source hardware and software project designed to create a modern, high-performance digital gauge for automotive applications. It fits into a standard **52mm (2 1/16")** gauge pod and utilizes the ESP32-S3 to render smooth, high-resolution graphics while interfacing directly with vehicle CAN bus networks.
+Open-Gauge is an open-source hardware and software project designed to create a modern, high-performance digital gauge for automotive applications. It fits into a standard **52mm (2 1/16")** gauge pod. Currently utilises the ESP32-S3 to render smooth, high-resolution graphics while interfacing directly with vehicle CAN bus networks.
 
 
+![Gauge Render](/Photos/render.png)
 
+## Purpose
+My Goal with this project is to create a better alternitive to all of the closed source gauges esp-32 based and others from large brands. I initally chose the Lillygo display as it fit the requirements of having a large vibrant AMOLED display and extra io pins broken out on the back of the board. 
+### V1 will be built upon the LilyGo Hardware with a Sheild/Hat board that plugs into the T-Dsiplay to give robust voltage regulation, a 2 wire canbus tranceiver and a 4 pin jst connect for the reqired connections (+12v, GND, CANH, CANL). 
+### My gold with V2 of the gauge is to design custom hardware utilising a STM32u5, instead of the esp32 for vastly greater graphical performance.
 ## 🚀 Initial Development status
 
-We currently have a functional prototype running on the **LilyGO T-Display S3 AMOLED (1.75")**. The core firmware and hardware schematics are established.
+We currently have a functional prototype running on the **LilyGO T-Display S3 AMOLED (1.75")**. The core firmware and hardware are established.
 
 ### Hardware Prototype
 
@@ -44,11 +49,9 @@ The vision for Open-Gauge extends beyond a simple display. We aim to build a ful
 
 2. **OBD-II & CAN Decoding:** Implement a flexible library to decode standard OBD-II PIDs (RPM, Coolant, Boost) and raw CAN frames for aftermarket ECUs (Link, Haltech, MoTeC).
 
-3. **Wireless Configurator:** Utilize the ESP32's WiFi to host a web server, allowing users to change colors, sensor mappings, and alarms from their phone without recompiling code.
+3. **Wireless Configurator:** Utilise the ESP32's WiFi to host a web server, allowing users to change colours, sensor mappings, and alarms from their phone without recompiling code.
 
-4. **3D Printed Enclosure:** Release open-source STL files for a snap-fit 52mm housing.
-
-5. **Daisy Chaining:** Support for linking multiple gauges together to share power and data.
+4. **Daisy Chaining:** Support for linking multiple gauges together to share power and data.
 
 ## 🛠️ Getting Started
 
@@ -56,7 +59,7 @@ The vision for Open-Gauge extends beyond a simple display. We aim to build a ful
 
 * **ESP-IDF v5.x** installed and configured.
 
-* **LilyGO T-Display S3 AMOLED** (1.75" Version).
+* **[LilyGO T-Display S3 AMOLED](https://lilygo.cc/products/t-display-s3-amoled-1-64?variant=44848332931253)** (1.75" Version).
 
 * **TJA1051T/3** CAN Transceiver module (or custom PCB).
 
@@ -67,7 +70,3 @@ The vision for Open-Gauge extends beyond a simple display. We aim to build a ful
 | **CAN TX** | GPIO 38 | Transmit to CAN Bus | 
 | **CAN RX** | GPIO 39 | Receive from CAN Bus | 
 | **Power** | 5V / GND | Regulated input | 
-
-### Build & Flash
-
-Built With ESP-IDF
