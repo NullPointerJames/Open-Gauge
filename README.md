@@ -5,7 +5,7 @@
 Open-Gauge is an open-source hardware and software project designed to create a modern, high-performance digital gauge for automotive applications. It fits into a standard **52mm (2 1/16")** gauge pod. Currently utilises the ESP32-S3 to render smooth, high-resolution graphics while interfacing directly with vehicle CAN bus networks.
 
 
-![Gauge Render](/Photos/render.png)
+![Gauge Render](Photos/Render.png)
 
 ## Purpose
 My Goal with this project is to create a better alternitive to all of the closed source gauges esp-32 based and others from large brands. I initally chose the Lillygo display as it fit the requirements of having a large vibrant AMOLED display and extra io pins broken out on the back of the board. 
