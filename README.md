@@ -1,17 +1,17 @@
-# Open-Gauge 🏎️
+# Open-Gauge
 
 **An Open Source 52mm CAN Bus Gauge**
 
 Open-Gauge is an open-source hardware and software project designed to create a modern, high-performance digital gauge for automotive applications. It fits into a standard **52mm (2 1/16")** gauge pod. Currently utilises the ESP32-S3 to render smooth, high-resolution graphics while interfacing directly with vehicle CAN bus networks.
 
 
-![Gauge Render](/Photos/render.png)
+![Gauge Render](Photos/Render.png)
 
 ## Purpose
-My Goal with this project is to create a better alternitive to all of the closed source gauges esp-32 based and others from large brands. I initally chose the Lillygo display as it fit the requirements of having a large vibrant AMOLED display and extra io pins broken out on the back of the board. 
-### V1 will be built upon the LilyGo Hardware with a Sheild/Hat board that plugs into the T-Dsiplay to give robust voltage regulation, a 2 wire canbus tranceiver and a 4 pin jst connect for the reqired connections (+12v, GND, CANH, CANL). 
-### My gold with V2 of the gauge is to design custom hardware utilising a STM32u5, instead of the esp32 for vastly greater graphical performance.
-## 🚀 Initial Development status
+My Goal with this project is to create a better alternative to all of the closed-source gauges, esp-32-based and others from large brands. I initially chose the Lillygo display as it fit the requirements of having a large, vibrant AMOLED display and extra IO pins broken out on the back of the board. 
+### V1 will be built upon the LilyGo Hardware with a Shield/Hat board that plugs into the T-Display to give robust voltage regulation, a 2 wire canbus tranceiver, and a 4 pin jst connect for the required connections (+12v, GND, CANH, CANL). 
+### My goal with V2 of the gauge is to design custom hardware utilising an STM32u5, instead of the ESP32, for vastly greater graphical performance.
+## Initial Development status
 
 We currently have a functional prototype running on the **LilyGO T-Display S3 AMOLED (1.75")**. The core firmware and hardware are established.
 
@@ -31,7 +31,7 @@ We currently have a functional prototype running on the **LilyGO T-Display S3 AM
 
 * **Framework:** ESP-IDF v5.x (FreeRTOS).
 
-* **Graphics:** LVGL 9.x optimized for SPI/DMA (achieving 30-60 FPS).
+* **Graphics:** LVGL 9.x optimised for SPI/DMA.
 
 * **Features Implemented:**
 
@@ -41,7 +41,7 @@ We currently have a functional prototype running on the **LilyGO T-Display S3 AM
 
   * **Hardware Abstraction:** Custom drivers for the CO5300/SH8601 display controller and CST9217 touch panel.
 
-## 🎯 Long Term Goals
+## Long Term Goals
 
 The vision for Open-Gauge extends beyond a simple display. We aim to build a fully customizable platform for car enthusiasts.
 
@@ -53,7 +53,7 @@ The vision for Open-Gauge extends beyond a simple display. We aim to build a ful
 
 4. **Daisy Chaining:** Support for linking multiple gauges together to share power and data.
 
-## 🛠️ Getting Started
+## Getting Started
 
 ### Prerequisites
 
