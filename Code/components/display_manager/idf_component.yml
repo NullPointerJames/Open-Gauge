@@ -1,0 +1,8 @@
+## External panel driver and touch driver for the T-Circle-S3
+dependencies:
+  idf: ">=5.1.0"
+
+  ## SH8601 QSPI AMOLED panel driver
+  espressif/esp_lcd_sh8601:
+    version: ">=1.0.0"
+

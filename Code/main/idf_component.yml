@@ -1,0 +1,7 @@
+## IDF Component Manager manifest for OpenGauge main component
+dependencies:
+  idf: ">=5.1.0"
+
+  ## LVGL port for ESP-IDF -- brings in LVGL 9.x, display task, tick, and touch glue
+  espressif/esp_lvgl_port:
+    version: ">=2.3.0"

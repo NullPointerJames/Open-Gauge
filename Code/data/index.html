@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenGauge Config</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>OpenGauge</h1>
+  <p class="subtitle">LilyGo T-Display S3 &mdash; CAN Bus Gauge</p>
+
+  <!-- Tab buttons -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="tab-config">Configuration</button>
+    <button class="tab-btn"        data-tab="tab-live">Live Data</button>
+    <button class="tab-btn"        data-tab="tab-faces">Gauge Faces</button>
+    <button class="tab-btn"        data-tab="tab-warnings">Warnings</button>
+  </div>
+
+  <!-- ── Configuration Tab ──────────────────────────────────────────────── -->
+  <div id="tab-config" class="tab-pane active">
+
+    <!-- CAN Protocol -->
+    <div class="card">
+      <h2>CAN Protocol</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="protocol">Protocol</label>
+          <select id="protocol">
+            <option value="0">Link ECU (G4+/G4X)</option>
+            <option value="1">Haltech Elite / Nexus</option>
+            <option value="2">OBD2 (ISO 15765-4)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="can_speed">Bus Speed</label>
+          <select id="can_speed">
+            <option value="1000000">1 Mbit/s</option>
+            <option value="500000">500 kbit/s</option>
+            <option value="250000">250 kbit/s</option>
+            <option value="125000">125 kbit/s</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="can_tx_pin">TX GPIO Pin</label>
+          <input id="can_tx_pin" type="number" min="0" max="48" value="43">
+        </div>
+        <div class="field">
+          <label for="can_rx_pin">RX GPIO Pin</label>
+          <input id="can_rx_pin" type="number" min="0" max="48" value="44">
+        </div>
+      </div>
+    </div>
+
+    <!-- Link ECU options -->
+    <div id="link-opts" class="card">
+      <h2>Link ECU Options</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="link_base_id">Base CAN ID (hex)</label>
+          <input id="link_base_id" type="text" value="0x518" placeholder="0x518">
+        </div>
+      </div>
+      <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem">
+        Default G4+/G4X stream uses 0x518 (frame 0). Adjust to match your PCLink CAN setup.
+      </p>
+    </div>
+
+    <!-- Haltech options -->
+    <div id="haltech-opts" class="card" style="display:none">
+      <h2>Haltech Options</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="haltech_base_id">Base CAN ID (hex)</label>
+          <input id="haltech_base_id" type="text" value="0x360" placeholder="0x360">
+        </div>
+      </div>
+      <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem">
+        Default Elite/Nexus stream uses 0x360. Match the ID offset set in NSP software.
+      </p>
+    </div>
+
+    <!-- Gauge Limits -->
+    <div class="card">
+      <h2>Gauge Limits &amp; Alerts</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="rpm_redline">RPM Redline</label>
+          <input id="rpm_redline" type="number" min="1000" max="20000" value="7000">
+        </div>
+        <div class="field">
+          <label for="coolant_warn">Coolant Warn Temp (°C)</label>
+          <input id="coolant_warn" type="number" min="60" max="150" value="100">
+        </div>
+        <div class="field">
+          <label for="oil_press_warn">Oil Press Warn (bar)</label>
+          <input id="oil_press_warn" type="number" step="0.1" min="0.5" max="10" value="2.0">
+        </div>
+      </div>
+    </div>
+
+    <!-- Gauge Colours -->
+    <div class="card">
+      <h2>Gauge Colours</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="color_normal">Normal (arc / needle)</label>
+          <input id="color_normal" type="color" value="#00B4D8">
+        </div>
+        <div class="field">
+          <label for="color_warn">Warning</label>
+          <input id="color_warn" type="color" value="#FFD60A">
+        </div>
+        <div class="field">
+          <label for="color_danger">Danger / Over-threshold</label>
+          <input id="color_danger" type="color" value="#FF3333">
+        </div>
+        <div class="field">
+          <label for="color_text">Primary Text</label>
+          <input id="color_text" type="color" value="#FFFFFF">
+        </div>
+        <div class="field">
+          <label for="color_arc_bg">Arc Track Background</label>
+          <input id="color_arc_bg" type="color" value="#1E1E1E">
+        </div>
+      </div>
+      <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem">
+        Changes take effect after Save &amp; Apply. Gauge reloads the colour scheme immediately.
+      </p>
+    </div>
+
+    <!-- Display Units -->
+    <div class="card">
+      <h2>Display Units</h2>
+      <div class="form-grid">
+        <div class="field field-check">
+          <label><input type="checkbox" id="display_temp_f"> Temperatures in °F (default: °C)</label>
+        </div>
+        <div class="field field-check">
+          <label><input type="checkbox" id="display_psi"> Pressures in PSI (default: kPa / bar)</label>
+        </div>
+        <div class="field field-check">
+          <label><input type="checkbox" id="display_mph"> Speed in mph (default: km/h)</label>
+        </div>
+        <div class="field field-check">
+          <label><input type="checkbox" id="display_afr"> Lambda as AFR ×14.7 (default: λ)</label>
+        </div>
+      </div>
+      <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem">
+        Dial face tick marks are rebuilt when you save. Configure your dial scale min/max in the
+        same unit (e.g. set MAP dial to 0–43 when using PSI, or 0–300 for kPa).
+      </p>
+    </div>
+
+    <!-- WiFi AP -->
+    <div class="card">
+      <h2>WiFi Access Point</h2>
+      <div class="form-grid">
+        <div class="field">
+          <label for="wifi_ssid">SSID</label>
+          <input id="wifi_ssid" type="text" maxlength="31" value="OpenGauge">
+        </div>
+        <div class="field">
+          <label for="wifi_password">Password (leave blank to keep current)</label>
+          <input id="wifi_password" type="password" maxlength="31" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
+        </div>
+      </div>
+      <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem">
+        Connect to this AP and open <strong>192.168.4.1</strong> to access this page.
+        New WiFi settings take effect after power cycle.
+      </p>
+    </div>
+
+    <div class="btn-row">
+      <button id="save-btn"  class="btn btn-primary">Save &amp; Apply</button>
+      <button id="reset-btn" class="btn btn-danger">Factory Reset</button>
+    </div>
+  </div>
+
+  <!-- ── Live Data Tab ──────────────────────────────────────────────────── -->
+  <div id="tab-live" class="tab-pane">
+    <div class="card">
+      <h2>Live CAN Data</h2>
+      <p id="live-status" style="font-size:0.85rem;margin-bottom:1rem;color:var(--muted)">Connecting...</p>
+
+      <!-- Core -->
+      <h3 class="live-section">Engine</h3>
+      <div class="data-grid">
+        <div class="data-cell" id="live-rpm">      <div class="val">--</div><div class="key">RPM</div></div>
+        <div class="data-cell" id="live-map">      <div class="val">--</div><div class="key">MAP kPa</div></div>
+        <div class="data-cell" id="live-tps">      <div class="val">--</div><div class="key">TPS %</div></div>
+        <div class="data-cell" id="live-inj-pri">  <div class="val">--</div><div class="key">Inj Pri %</div></div>
+        <div class="data-cell" id="live-inj-sec">  <div class="val">--</div><div class="key">Inj Sec %</div></div>
+        <div class="data-cell" id="live-ign">       <div class="val">--</div><div class="key">Ign Angle °</div></div>
+        <div class="data-cell" id="live-lambda1">  <div class="val">--</div><div class="key">Lambda 1 λ</div></div>
+        <div class="data-cell" id="live-lambda2">  <div class="val">--</div><div class="key">Lambda 2 λ</div></div>
+        <div class="data-cell" id="live-t-boost">  <div class="val">--</div><div class="key">Target Boost kPa</div></div>
+      </div>
+
+      <!-- Pressures & Electrical -->
+      <h3 class="live-section">Pressures &amp; Electrical</h3>
+      <div class="data-grid">
+        <div class="data-cell" id="live-oil-p">    <div class="val">--</div><div class="key">Oil Press bar</div></div>
+        <div class="data-cell" id="live-fuel-p">   <div class="val">--</div><div class="key">Fuel Press bar</div></div>
+        <div class="data-cell" id="live-bat">       <div class="val">--</div><div class="key">Battery V</div></div>
+        <div class="data-cell" id="live-baro">     <div class="val">--</div><div class="key">Baro kPa</div></div>
+      </div>
+
+      <!-- Temperatures -->
+      <h3 class="live-section">Temperatures</h3>
+      <div class="data-grid">
+        <div class="data-cell" id="live-coolant">  <div class="val">--</div><div class="key">Coolant °C</div></div>
+        <div class="data-cell" id="live-oil-t">    <div class="val">--</div><div class="key">Oil Temp °C</div></div>
+        <div class="data-cell" id="live-iat">       <div class="val">--</div><div class="key">IAT °C</div></div>
+        <div class="data-cell" id="live-fuel-t">   <div class="val">--</div><div class="key">Fuel Temp °C</div></div>
+      </div>
+
+      <!-- Vehicle -->
+      <h3 class="live-section">Vehicle</h3>
+      <div class="data-grid">
+        <div class="data-cell" id="live-speed">    <div class="val">--</div><div class="key">Speed km/h</div></div>
+        <div class="data-cell" id="live-gear">     <div class="val">--</div><div class="key">Gear</div></div>
+        <div class="data-cell" id="live-cam1">     <div class="val">--</div><div class="key">Cam Angle 1 °</div></div>
+        <div class="data-cell" id="live-cam2">     <div class="val">--</div><div class="key">Cam Angle 2 °</div></div>
+        <div class="data-cell" id="live-fuel-con"> <div class="val">--</div><div class="key">Fuel Consump L/hr</div></div>
+        <div class="data-cell" id="live-fuel-eco"> <div class="val">--</div><div class="key">Avg Economy L</div></div>
+      </div>
+
+      <!-- EGTs -->
+      <h3 class="live-section">Exhaust Gas Temps (°C)</h3>
+      <div class="data-grid" id="egt-grid">
+        <div class="data-cell" id="live-egt1">  <div class="val">--</div><div class="key">EGT 1</div></div>
+        <div class="data-cell" id="live-egt2">  <div class="val">--</div><div class="key">EGT 2</div></div>
+        <div class="data-cell" id="live-egt3">  <div class="val">--</div><div class="key">EGT 3</div></div>
+        <div class="data-cell" id="live-egt4">  <div class="val">--</div><div class="key">EGT 4</div></div>
+        <div class="data-cell" id="live-egt5">  <div class="val">--</div><div class="key">EGT 5</div></div>
+        <div class="data-cell" id="live-egt6">  <div class="val">--</div><div class="key">EGT 6</div></div>
+        <div class="data-cell" id="live-egt7">  <div class="val">--</div><div class="key">EGT 7</div></div>
+        <div class="data-cell" id="live-egt8">  <div class="val">--</div><div class="key">EGT 8</div></div>
+        <div class="data-cell" id="live-egt9">  <div class="val">--</div><div class="key">EGT 9</div></div>
+        <div class="data-cell" id="live-egt10"> <div class="val">--</div><div class="key">EGT 10</div></div>
+        <div class="data-cell" id="live-egt11"> <div class="val">--</div><div class="key">EGT 11</div></div>
+        <div class="data-cell" id="live-egt12"> <div class="val">--</div><div class="key">EGT 12</div></div>
+      </div>
+
+      <!-- Diagnostics -->
+      <h3 class="live-section">Trigger Diagnostics</h3>
+      <div class="data-grid">
+        <div class="data-cell" id="live-miss">    <div class="val">--</div><div class="key">Miss Count</div></div>
+        <div class="data-cell" id="live-trigger"> <div class="val">--</div><div class="key">Trigger Count</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Gauge Faces Tab ────────────────────────────────────────────────── -->
+  <div id="tab-faces" class="tab-pane">
+
+    <!-- Custom Dial Images -->
+    <div class="card">
+      <h2>Custom Dial Images</h2>
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem">
+        Upload PNG images to replace the default arc and needle on <em>Dial</em> faces.
+        Background: 466&times;466 px. Needle: any size, pointing straight&nbsp;<strong>down</strong> (6&nbsp;o&rsquo;clock) at 0° rotation.
+      </p>
+      <div class="form-grid">
+        <div class="field">
+          <label>Background Image</label>
+          <span id="img-bg-status" class="img-status">—</span>
+          <input id="img-bg-file" type="file" accept="image/png" style="margin-top:0.35rem">
+          <div class="btn-row" style="margin-top:0.5rem;gap:0.5rem">
+            <button id="img-bg-upload" class="btn btn-primary" style="flex:1">Upload</button>
+            <button id="img-bg-delete" class="btn btn-danger"  style="flex:1">Delete</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Needle Image</label>
+          <span id="img-nd-status" class="img-status">—</span>
+          <input id="img-nd-file" type="file" accept="image/png" style="margin-top:0.35rem">
+          <div class="btn-row" style="margin-top:0.5rem;gap:0.5rem">
+            <button id="img-nd-upload" class="btn btn-primary" style="flex:1">Upload</button>
+            <button id="img-nd-delete" class="btn btn-danger"  style="flex:1">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="faces-container">
+      <p style="color:var(--muted);text-align:center;padding:2rem">Loading face configuration...</p>
+    </div>
+    <div class="btn-row">
+      <button id="save-faces-btn" class="btn btn-primary">Save Faces</button>
+    </div>
+  </div>
+
+  <!-- ── Warnings Tab ──────────────────────────────────────────────────── -->
+  <div id="tab-warnings" class="tab-pane">
+    <div class="card">
+      <h2>Configurable Warnings</h2>
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:1rem">
+        Up to 8 warning slots. Set a threshold to 0 to disable that direction.
+        <strong>High priority</strong> warnings replace the entire gauge display with a
+        full-screen alert; low priority warnings tint the status bar yellow.
+      </p>
+      <div id="warnings-container">
+        <p style="color:var(--muted);text-align:center;padding:2rem">Loading...</p>
+      </div>
+      <div class="btn-row">
+        <button id="save-warnings-btn" class="btn btn-primary">Save Warnings</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
